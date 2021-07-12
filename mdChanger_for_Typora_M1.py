@@ -3,6 +3,7 @@ from PIL import Image
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
+import os
 from os import listdir
 from os.path import isfile, join
 
@@ -15,8 +16,8 @@ label1 = tk.Label(root, text='md-changer\nfor-typoraImage', bg = 'white')
 label1.config(font=('helvetica', 20))
 canvas1.create_window(150, 60, window=label1)
 
-link1 = "C:\\Users\\sb020\\AppData\\Roaming\\Typora\\typora-user-images\\"
-link2 = "https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/Typora/"
+link1 = "/Users/junha-m1/Library/Application Support/typora-user-images/"
+link2 = "https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/Typora-M1/"
 
 def getFile ():
     read_path = ""
@@ -24,9 +25,12 @@ def getFile ():
     read_path = filedialog.askopenfilename()
     print("Read : "+ read_path)
 
-    write_path = read_path[:-3] + "-changed" + read_path[-3:]
+    read_old_path = read_path[:-3] + "-old" + read_path[-3:]
+    os.rename(read_path, read_old_path)
+    write_path = read_path
+    
     out = open(write_path, 'wt', encoding='UTF8')
-    with open(read_path,'rt', encoding='UTF8') as fp:
+    with open(read_old_path,'rt', encoding='UTF8') as fp:
         while True:
             line = fp.readline()
             if not line: break
